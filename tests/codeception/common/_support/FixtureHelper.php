@@ -3,6 +3,11 @@
 namespace tests\codeception\common\_support;
 
 use tests\codeception\common\fixtures\UserFixture;
+use tests\codeception\common\fixtures\AuthItemFixture;
+use tests\codeception\common\fixtures\AuthRuleFixture;
+use tests\codeception\common\fixtures\AuthAssignmentFixture;
+use tests\codeception\common\fixtures\AuthItemChildFixture;
+use tests\codeception\common\fixtures\location\CountryFixture;
 use Codeception\Module;
 use yii\test\FixtureTrait;
 use common\models\User;
@@ -57,6 +62,26 @@ class FixtureHelper extends Module
                 'class' => UserFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/data/user.php',
             ],
+            'authItems' => [
+                'class' => AuthItemFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/data/auth_item.php'
+            ],
+            'authRules' => [
+                'class' => AuthRuleFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/data/auth_rule.php'
+            ],
+            'authAssignments' => [
+                'class' => AuthAssignmentFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/data/auth_assignment.php'
+            ],
+            'authItemChildren' => [
+                'class' => AuthItemChildFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/data/auth_item_child.php'
+            ],
+            'countries' => [
+                'class' => CountryFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/location/data/country.php',
+            ],
         ];
     }
 
@@ -68,6 +93,19 @@ class FixtureHelper extends Module
             $this->assertFalse(Yii::$app->user->isGuest);
         }catch(Exception $e){
             echo 'User not found: '.$e->message;
+        }
+    }
+
+    public function seeStatusCodeIs($code)
+    {
+        $status = $this->getModule('PhpBrowser')->session->getStatusCode();
+
+        if(is_array($code)){
+            if(!in_array($status,$code)){
+                $this->assertEquals(200, $status);
+            }
+        } else {
+            $this->assertEquals($code, $status);
         }
     }
 }

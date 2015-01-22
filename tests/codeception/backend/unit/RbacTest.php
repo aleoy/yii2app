@@ -96,7 +96,6 @@ class RbacTest extends DbTestCase
                 'class' => AuthItemFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/data/auth_item.php'
             ],
-            
             'authRules' => [
                 'class' => AuthRuleFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/data/auth_rule.php'

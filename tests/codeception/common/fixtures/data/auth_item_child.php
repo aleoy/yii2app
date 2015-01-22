@@ -1,2 +1,7 @@
 <?php 
-return [];
+return [
+  [
+    'parent' => 'admin',
+    'child' => 'crudCountries'
+  ], 
+];

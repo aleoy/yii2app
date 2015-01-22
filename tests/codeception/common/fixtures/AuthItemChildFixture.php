@@ -10,4 +10,7 @@ use yii\test\ActiveFixture;
 class AuthItemChildFixture extends ActiveFixture
 {
     public $modelClass = 'tests\codeception\common\fixtures\models\AuthItemChild';
+    public $depends = [
+            'tests\codeception\common\fixtures\AuthItemFixture',
+           ];
 }
