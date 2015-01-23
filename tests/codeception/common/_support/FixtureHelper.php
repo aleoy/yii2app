@@ -8,6 +8,7 @@ use tests\codeception\common\fixtures\AuthRuleFixture;
 use tests\codeception\common\fixtures\AuthAssignmentFixture;
 use tests\codeception\common\fixtures\AuthItemChildFixture;
 use tests\codeception\common\fixtures\location\CountryFixture;
+use tests\codeception\common\_pages\LoginPage;
 use Codeception\Module;
 use yii\test\FixtureTrait;
 use common\models\User;
@@ -85,7 +86,38 @@ class FixtureHelper extends Module
         ];
     }
 
-    function amLoggedAs($username)
+    public function amLoggedAs($username, $password = null, $I = null)
+    {
+        if(null != $I)
+            $this->loginAcceptance($username, $password, $I);
+        else
+            $this->loginFunctional($username);
+        /*
+        Analysing stack trace is possible to determine wich test is runing.
+        This simplistic approach to determine wich kind of test is running is due to the fact that,
+        functional tests do not need to know user's password to login.
+
+        codecept_debug(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10));
+        [4] => Array
+          (
+              [file] => /vagrant/yii2app/tests/codeception/backend/acceptance/AcceptanceTester.php
+              [line] => 2755
+              [function] => runStep
+              [class] => Codeception\Scenario
+              [type] => ->
+          )
+        [4] => Array
+          (
+              [file] => /vagrant/yii2app/tests/codeception/backend/functional/FunctionalTester.php
+              [line] => 1960
+              [function] => runStep
+              [class] => Codeception\Scenario
+              [type] => ->
+          )
+         */
+    }
+
+    protected function loginFunctional($username)
     {
         $user = User::findOne(['username' => $username]);
         try{
@@ -95,6 +127,15 @@ class FixtureHelper extends Module
             echo 'User not found: '.$e->message;
         }
     }
+
+    protected function loginAcceptance($username, $password, $I)
+    {
+        $loginPage = LoginPage::openBy($I);
+
+        $I->amGoingTo("login as {$username}");
+        $loginPage->login($username, $password, $I);
+    }
+
 
     public function seeStatusCodeIs($code)
     {
