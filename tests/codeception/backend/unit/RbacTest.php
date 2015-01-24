@@ -33,7 +33,7 @@ class RbacTest extends DbTestCase
 
         // // add "admin" role and give this role the "updatePost" permission
         // // as well as the permissions of the "author" role
-        $admin = $auth->createRole('admin');
+        $admin = $auth->createRole('backendAdmin');
         $auth->add($admin);
         $auth->addChild($admin, $updatePost);
         $auth->addChild($admin, $author);

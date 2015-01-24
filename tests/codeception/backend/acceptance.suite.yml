@@ -14,16 +14,17 @@ modules:
         - Filesystem
         - Yii2
         - WebDriver
-        - PhpBrowser
+        #- PhpBrowser
         - tests\codeception\common\_support\FixtureHelper
     config:
         Yii2:
             configFile: '../config/backend/acceptance.php'
-        PhpBrowser:
-            url: http://admintest.yii2app
+        #PhpBrowser:
+        #    url: http://admintest.yii2app
         WebDriver:
            url: http://admintest.yii2app
            browser: phantomjs
+           window_size: 1024x768
            capabilities:
                 phantomjs.cli.args: ['--ignore-ssl-errors=true']
                 webStorageEnabled: true

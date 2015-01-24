@@ -33,6 +33,13 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'Dropdown',
+                 'items' => [
+                    ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                    '<li class="divider"></li>',
+                    '<li class="dropdown-header">Dropdown Header</li>',
+                    ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+                ]],
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
