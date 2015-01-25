@@ -12,7 +12,7 @@ use tests\codeception\backend\FunctionalTester;
 use Yii\helpers\Url;
 
 $I = new FunctionalTester($scenario);
-$I->wantTo('ensure location module page works');
+$I->wantTo('ensure location/country page works');
 
 $I->amGoingTo('view countries');
 $I->amLoggedAs('admin');
