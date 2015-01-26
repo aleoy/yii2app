@@ -42,7 +42,7 @@ $I->see('Cities','h1');
 $I->amGoingTo('create city');
 $I->amOnPage('/location/city/create');
 $I->see('Create city','h1');
-//sleep(1000);
+
 $I->amGoingTo('read city');
 $I->amOnPage(['/location/city/view', 'id'=>'1']);
 $I->see('Riga','h1');
