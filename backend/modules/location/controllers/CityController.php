@@ -3,6 +3,7 @@
 namespace backend\modules\location\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use common\models\location\City;
 use backend\modules\location\models\CitySearchModel;
 use yii\web\Controller;
@@ -17,6 +18,17 @@ class CityController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'except' => [],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => [], //all actions
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

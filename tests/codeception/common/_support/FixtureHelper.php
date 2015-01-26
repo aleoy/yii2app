@@ -7,7 +7,6 @@ use tests\codeception\common\fixtures\AuthItemFixture;
 use tests\codeception\common\fixtures\AuthRuleFixture;
 use tests\codeception\common\fixtures\AuthAssignmentFixture;
 use tests\codeception\common\fixtures\AuthItemChildFixture;
-use tests\codeception\common\fixtures\location\CountryFixture;
 use tests\codeception\common\_pages\LoginPage;
 use Codeception\Module;
 use yii\test\FixtureTrait;
@@ -78,10 +77,6 @@ class FixtureHelper extends Module
             'authItemChildren' => [
                 'class' => AuthItemChildFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/data/auth_item_child.php'
-            ],
-            'countries' => [
-                'class' => CountryFixture::className(),
-                'dataFile' => '@tests/codeception/common/fixtures/location/data/country.php',
             ],
         ];
     }

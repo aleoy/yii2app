@@ -20,11 +20,11 @@ class CountryController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
+                'except' => [],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => [], //all actions
                         'roles' => ['admin'],
                     ],
                 ],

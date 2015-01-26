@@ -1,8 +1,10 @@
 <?php
 
 use tests\codeception\backend\AcceptanceTester;
-use tests\codeception\backend\_pages\CountryPage;
-use Yii\helpers\Url as Url;
+use tests\codeception\common\_support\location\CountryFixtureHelper;
+
+$countryFixture = new CountryFixtureHelper;
+$countryFixture->loadFixtures();
 
 $I = new AcceptanceTester($scenario);
 $I->wantTo('ensure country page works');

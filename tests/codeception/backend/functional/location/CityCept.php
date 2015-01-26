@@ -17,6 +17,23 @@ $cityFixture->loadFixtures();
 $I = new FunctionalTester($scenario);
 $I->wantTo('ensure location/city page works');
 
+$I->amGoingTo('check actions authorizations');
+//as guest
+$routes = [
+  '/location/city/index',
+  '/location/city/create',
+  ['/location/city/view', 'id'=>'1'],
+  ['/location/city/update', 'id'=>'1'],
+];
+
+foreach($routes as $route){
+  $I->amOnPage($route);
+  $I->see('Login','h1');
+}
+
+$I->sendAjaxRequest('POST', '/location/city/delete?id=1');
+$I->seeRecord('common\models\location\City', array('id' => 1));
+
 $I->amGoingTo('view cities');
 $I->amLoggedAs('admin');
 $I->amOnPage('/location/city/index');
