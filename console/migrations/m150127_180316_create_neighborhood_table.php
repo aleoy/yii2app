@@ -4,20 +4,21 @@ use yii\db\Schema;
 use yii\db\Migration;
 use console\migrations\TableOptions;
 
-class m150126_112326_create_district_table extends Migration
+class m150127_180316_create_neighborhood_table extends Migration
 {
     public function up()
     {
       $tableOptions = TableOptions::get($this);
 
-      $this->createTable('{{%district}}', [
+      $this->createTable('{{%neighborhood}}', [
         'id' => 'pk',
         'cityId' => Schema::TYPE_INTEGER . ' NOT NULL',
+        'districtId' => Schema::TYPE_INTEGER . ' NOT NULL',
         'name' => Schema::TYPE_STRING . ' NOT NULL',
       ], $tableOptions);
 
-      $name = 'fk_city_district';
-      $table = 'district';
+      $name = 'fk_city_neighborhood';
+      $table = 'neighborhood';
       $columns = 'cityId';
       $refTable = 'city';
       $refColumns = 'id';
@@ -26,10 +27,16 @@ class m150126_112326_create_district_table extends Migration
       $this->addForeignKey(
         $name, $table, $columns, $refTable, $refColumns, $delete, $update
       );
+      $name = 'fk_district_neighborhood';
+      $columns = 'districtId';
+      $refTable = 'district';
+      $this->addForeignKey(
+        $name, $table, $columns, $refTable, $refColumns, $delete, $update
+      );
     }
 
     public function down()
     {
-        $this->dropTable('district');
+        $this->dropTable('neighborhood');
     }
 }
