@@ -5,90 +5,78 @@ namespace tests\codeception\backend\unit\location;
 use tests\codeception\backend\unit\DbTestCase;
 use common\models\location\City;
 use common\models\location\District;
+use common\models\location\Neighborhood;
 
 use tests\codeception\common\fixtures\location\CityFixture;
 use tests\codeception\common\fixtures\location\DistrictFixture;
+use tests\codeception\common\fixtures\location\NeighborhoodFixture;
 
-class DistrictTest extends DbTestCase
+class NeighborhoodTest extends DbTestCase
 {
     use \Codeception\Specify;
 
     public function testCreate()
     {
+        //name
         $this->specify("name is required", function() {
-            $model = new District;
+            $model = new Neighborhood;
             $model->name = null;
             $this->assertFalse($model->validate(['name']));
         });
 
+        //cityId
         $this->specify("cityId is required", function() {
-            $model = new District;
+            $model = new Neighborhood;
             $model->cityId = null;
             $this->assertFalse($model->validate(['cityId']));
         });
 
-        $this->specify("cityId exists", function() {
-            $model = new District;
+        $this->specify("cityId is exists", function() {
+            $model = new Neighborhood;
             $model->cityId = 9999; //nonexistant valid CityId
-            
-            $city = City::findOne(['id' => $model->cityId]);
-            $this->assertNull($city);
-
             $this->assertFalse($model->validate(['cityId']));
         });
 
+        //districtId
+        $this->specify("districtId is required", function() {
+            $model = new Neighborhood;
+            $model->districtId = null;
+            $this->assertFalse($model->validate(['districtId']));
+        });
+
+        $this->specify("districtId exists", function() {
+            $model = new Neighborhood;
+            $model->districtId = 999; //nonexistant valid DistrictId
+            $this->assertFalse($model->validate(['districtId']));
+        });
+
         $this->specify("object is saved", function() {
-            $model = new District;
-            $model->name = "kurzeme";
+            $model = new Neighborhood;
+            $model->name = "vecrīga";
             $model->cityId = $this->cities('riga')->id;
+            $model->districtId = $this->districts('central')->id;
             $model->save();
 
-            $dbModel = District::findOne(['name' => 'kurzeme']);
+            $dbModel = Neighborhood::findOne(['name' => 'vecrīga']);
             $this->assertSame($model->name, $dbModel->name);
             $this->assertSame($model->cityId, $dbModel->cityId);
+            $this->assertSame($model->districtId, $dbModel->districtId);
         });
     }
 
     public function testRead()
     {
-        $this->specify("read object from db", function() {
-            $model = District::findOne(['name' => 'central']);
-            $this->assertSame($model->name, 'central');
-            $this->assertSame($model->cityId, $this->cities('riga')->id);
-        });
-
-        $this->specify("object not found in db", function() {
-            $model = District::findOne(['name' => 'madona']);
-            $this->assertNull($model);
-        });
+        $this->fail('needs implementation');
     }
 
     public function testUpdate()
     {
-        $this->specify("update object from db", function() {
-            $model = District::findOne(['name' => 'central']);
-            $model->name = 'latgale';
-            $model->cityId = $this->cities('liepaja')->id;
-            $model->save();
-
-            $updatedObject = District::findOne($model->id);
-            $this->assertSame($updatedObject->name, 'latgale');
-            $this->assertSame(
-                $updatedObject->cityId, $this->cities('liepaja')->id
-            );
-        });
+        $this->fail('needs implementation');
     }
 
     public function testDelete()
     {
-        $this->specify("delete object from db", function() {
-            $model = District::findOne(['name' => 'central']);
-            $modelId = $model->id;
-            $model->delete();
-
-            $deletedObject = District::findOne($modelId);
-            $this->assertNull($deletedObject);
-        });
+        $this->fail('needs implementation');
     }
 
     public function fixtures()
@@ -101,6 +89,10 @@ class DistrictTest extends DbTestCase
             'districts' => [
                 'class' => DistrictFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/location/data/district.php'
+            ],
+            'neighborhoods' => [
+                'class' => NeighborhoodFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/location/data/neighborhood.php'
             ],
         ];
     }

@@ -5,7 +5,7 @@ namespace tests\codeception\common\fixtures\location;
 use yii\test\ActiveFixture;
 
 /**
- * Country fixture
+ * District fixture
  */
 class DistrictFixture extends ActiveFixture
 {
