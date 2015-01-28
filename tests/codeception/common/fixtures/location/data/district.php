@@ -9,4 +9,8 @@ return [
     'cityId' => $riga->primaryKey,
     'name' => 'central'
   ],
+  'vidzeme' => [
+    'cityId' => $riga->primaryKey,
+    'name' => 'vidzeme'
+  ],
 ];

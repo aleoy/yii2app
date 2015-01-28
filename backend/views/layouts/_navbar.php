@@ -28,7 +28,7 @@ use yii\helpers\Url;
                         ['label' => 'Search', 'url' => Url::to(['/location/district/index'])],
                         '<li class="divider"></li>',
                         '<li class="dropdown-header">Neighborhood</li>',
-                        ['label' => 'Search', 'url' => '#'],
+                        ['label' => 'Search', 'url' => Url::to(['/location/neighborhood/index'])],
                     ]],
                     ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                         'url' => ['/site/logout'],

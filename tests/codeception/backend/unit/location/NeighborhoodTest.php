@@ -66,17 +66,45 @@ class NeighborhoodTest extends DbTestCase
 
     public function testRead()
     {
-        $this->fail('needs implementation');
+        $this->specify("read object from db", function() {
+            $model = Neighborhood::findOne(['name' => 'centrs']);
+            $this->assertSame($model->name, 'centrs');
+            $this->assertSame($model->cityId, $this->cities('riga')->id);
+            $this->assertSame($model->districtId, $this->districts('central')->id);
+        });
+
+        $this->specify("object not found in db", function() {
+            $model = Neighborhood::findOne(['name' => 'madona']);
+            $this->assertNull($model);
+        });
     }
 
     public function testUpdate()
     {
-        $this->fail('needs implementation');
+        $this->specify("update object from db", function() {
+            $model = Neighborhood::findOne(['name' => 'centrs']);
+            $model->name = 'brasa';
+            $model->districtId = $this->districts('vidzeme')->id;
+            $model->save();
+
+            $updatedObject = Neighborhood::findOne($model->id);
+            $this->assertSame($updatedObject->name, 'brasa');
+            $this->assertSame(
+                $updatedObject->districtId, $this->districts('vidzeme')->id
+            );
+        });
     }
 
     public function testDelete()
     {
-        $this->fail('needs implementation');
+        $this->specify("delete object from db", function() {
+            $model = Neighborhood::findOne(['name' => 'centrs']);
+            $modelId = $model->id;
+            $model->delete();
+
+            $deletedObject = Neighborhood::findOne($modelId);
+            $this->assertNull($deletedObject);
+        });
     }
 
     public function fixtures()
