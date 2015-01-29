@@ -18,6 +18,6 @@ class m150120_114640_create_country_table extends Migration
 
     public function down()
     {
-        $this->dropTable('country');
+        $this->dropTable('{{%country}}');
     }
 }

@@ -30,6 +30,6 @@ class m150126_112326_create_district_table extends Migration
 
     public function down()
     {
-        $this->dropTable('district');
+        $this->dropTable('{{%district}}');
     }
 }

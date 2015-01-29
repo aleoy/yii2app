@@ -37,6 +37,6 @@ class m150127_180316_create_neighborhood_table extends Migration
 
     public function down()
     {
-        $this->dropTable('neighborhood');
+        $this->dropTable('{{%neighborhood}}');
     }
 }

@@ -18,6 +18,6 @@ class m150124_170034_create_city_table extends Migration
 
     public function down()
     {
-        $this->dropTable('city');
+        $this->dropTable('{{%city}}');
     }
 }
