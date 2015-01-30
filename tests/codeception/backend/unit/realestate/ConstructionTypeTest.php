@@ -3,28 +3,28 @@
 namespace tests\codeception\backend\unit\realestate;
 
 use tests\codeception\backend\unit\DbTestCase;
-use common\models\realestate\PropertyType;
+use common\models\realestate\ConstructionType;
 
-use tests\codeception\common\fixtures\realestate\PropertyTypeFixture;
+use tests\codeception\common\fixtures\realestate\ConstructionTypeFixture;
 
-class PropertyTypeTest extends DbTestCase
+class ConstructionTypeTest extends DbTestCase
 {
     use \Codeception\Specify;
 
     public function testCreate()
     {
         $this->specify("name is required", function() {
-            $model = new PropertyType;
+            $model = new ConstructionType;
             $model->name = null;
             $this->assertFalse($model->validate(['name']));
         });
 
         $this->specify("object is saved", function() {
-            $model = new PropertyType;
-            $model->name = "flat";
+            $model = new ConstructionType;
+            $model->name = "wood";
             $model->save();
 
-            $dbModel = PropertyType::findOne(['name' => 'flat']);
+            $dbModel = ConstructionType::findOne(['name' => 'wood']);
             $this->assertSame($model->name, $dbModel->name);
         });
     }
@@ -32,31 +32,31 @@ class PropertyTypeTest extends DbTestCase
     public function testRead()
     {
         $this->specify("read object from db", function() {
-            $model = $this->propertyTypes('apartment');
-            $this->assertSame($model->name, 'apartment');
+            $model = $this->constructionTypes('brick');
+            $this->assertSame($model->name, 'brick');
         });
     }
 
     public function testUpdate()
     {
         $this->specify("update object from db", function() {
-            $model = $this->propertyTypes('apartment');
-            $model->name = 'apartmentas';
+            $model = $this->constructionTypes('brick');
+            $model->name = 'brickzila';
             $model->save();
 
-            $updatedObject = PropertyType::findOne($model->id);
-            $this->assertSame($updatedObject->name, 'apartmentas');
+            $updatedObject = ConstructionType::findOne($model->id);
+            $this->assertSame($updatedObject->name, 'brickzila');
         });
     }
 
     public function testDelete()
     {
         $this->specify("delete object from db", function() {
-            $model = $this->propertyTypes('apartment');
+            $model = $this->constructionTypes('brick');
             $modelId = $model->id;
             $model->delete();
 
-            $deletedObject = PropertyType::findOne($modelId);
+            $deletedObject = ConstructionType::findOne($modelId);
             $this->assertNull($deletedObject);
         });
     }
@@ -64,9 +64,9 @@ class PropertyTypeTest extends DbTestCase
     public function fixtures()
     {
         return [
-            'propertyTypes' => [
-                'class' => PropertyTypeFixture::className(),
-                'dataFile' => '@tests/codeception/common/fixtures/realestate/data/property-type.php'
+            'constructionTypes' => [
+                'class' => ConstructionTypeFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/realestate/data/construction-type.php'
             ],
         ];
     }
