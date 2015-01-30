@@ -34,6 +34,12 @@ use yii\helpers\Url;
                      'items' => [
                         '<li class="dropdown-header">Property Type</li>',
                         ['label' => 'Search', 'url' => Url::to(['/realestate/property-type/index'])],
+                        '<li class="divider"></li>',
+                        '<li class="dropdown-header">Construction Type</li>',
+                        ['label' => 'Search', 'url' => Url::to(['/realestate/construction-type/index'])],
+                        '<li class="divider"></li>',
+                        '<li class="dropdown-header">Construction Stage</li>',
+                        ['label' => 'Search', 'url' => Url::to(['/realestate/construction-stage/index'])],
                     ]],
                     ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                         'url' => ['/site/logout'],
