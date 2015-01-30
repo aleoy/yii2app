@@ -30,6 +30,11 @@ use yii\helpers\Url;
                         '<li class="dropdown-header">Neighborhood</li>',
                         ['label' => 'Search', 'url' => Url::to(['/location/neighborhood/index'])],
                     ]],
+                    ['label' => 'Realestate',
+                     'items' => [
+                        '<li class="dropdown-header">Property Type</li>',
+                        ['label' => 'Search', 'url' => Url::to(['/realestate/property-type/index'])],
+                    ]],
                     ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                         'url' => ['/site/logout'],
                         'linkOptions' => ['data-method' => 'post']
