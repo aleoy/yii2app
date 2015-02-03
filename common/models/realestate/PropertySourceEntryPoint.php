@@ -37,9 +37,11 @@ class PropertySourceEntryPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sourceId', 'statusId', 'url'], 'required'],
-            [['sourceId', 'statusId', 'currentPage'], 'integer'],
+            [['sourceId', 'url'], 'required'],
+            ['statusId', 'default', 'value' => self::STATUS_INACTIVE, 'on' => ['create']],
+            ['statusId', 'required', 'except' => ['create']],
             ['statusId', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
+            [['sourceId', 'statusId', 'currentPage'], 'integer'],
             [['startedAt', 'finishedAt'], 'safe'],
             [['url', 'description'], 'string', 'max' => 255],
             ['url', 'url', 'defaultScheme' => 'http'],

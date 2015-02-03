@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\realestate\PropertySourceEntryPoint */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<?php print_r($model->getErrors()); ?>
 <div class="property-source-entry-point-form">
 
     <?php $form = ActiveForm::begin(); ?>

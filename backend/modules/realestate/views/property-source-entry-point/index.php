@@ -30,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'sourceId',
             'statusId',
+            'description',
             'startedAt',
             'finishedAt',
             // 'url:url',
             // 'currentPage',
-            // 'description',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
