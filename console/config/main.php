@@ -13,6 +13,9 @@ return [
     'controllerNamespace' => 'console\controllers',
     'modules' => [
         'gii' => 'yii\gii\Module',
+        'scraper' => [
+            'class' => 'console\modules\scraper\Scraper',
+        ],
     ],
     'components' => [
         'log' => [
