@@ -7,7 +7,7 @@ use console\migrations\MigrationHelper;
 class m150205_073305_seed_city_table extends Migration
 {
     private $_table = '{{%city}}';
-    private $_catalog = 'location/city';
+    private $_catalog = 'app/location/city';
 
     public function up()
     {

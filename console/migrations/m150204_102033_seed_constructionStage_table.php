@@ -7,7 +7,7 @@ use console\migrations\MigrationHelper;
 class m150204_102033_seed_constructionStage_table extends Migration
 {
     private $_table = '{{%construction_stage}}';
-    private $_catalog = 'realestate/constructionStage';
+    private $_catalog = 'app/realestate/constructionStage';
 
     public function up()
     {
