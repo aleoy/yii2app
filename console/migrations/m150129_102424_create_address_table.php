@@ -16,14 +16,14 @@ class m150129_102424_create_address_table extends Migration
         'id' => 'pk',
         'cityId' => Schema::TYPE_INTEGER . ' NOT NULL',
         'districtId' => Schema::TYPE_INTEGER . ' NOT NULL',
-        'neighborhoodId' => Schema::TYPE_INTEGER . ' NOT NULL',
+        'neighborhoodId' => Schema::TYPE_INTEGER . ' NULL',
         'streetName' => Schema::TYPE_STRING . ' NOT NULL',
         'streetNumber' => Schema::TYPE_STRING . ' NOT NULL',
         'buildingNumber' => Schema::TYPE_STRING . ' NULL',
-        'postCode' => Schema::TYPE_STRING . ' NOT NULL',
+        'postCode' => Schema::TYPE_STRING . ' NULL',
         'complement' => Schema::TYPE_STRING . ' NULL',
-        'latitude' => Schema::TYPE_FLOAT . ' NOT NULL',
-        'longitude' => Schema::TYPE_FLOAT . ' NOT NULL',
+        'latitude' => Schema::TYPE_FLOAT . ' (10,6) NOT NULL',
+        'longitude' => Schema::TYPE_FLOAT . ' (10, 6) NOT NULL',
       ], $tableOptions);
 
       $name = 'fk_city_address';
@@ -39,13 +39,6 @@ class m150129_102424_create_address_table extends Migration
       $name = 'fk_district_address';
       $columns = 'districtId';
       $refTable = 'district';
-      $this->addForeignKey(
-        $name, $this->_table, $columns, $refTable, $refColumns, $delete, $update
-      );
-
-      $name = 'fk_neighborhood_address';
-      $columns = 'neighborhoodId';
-      $refTable = 'neighborhood';
       $this->addForeignKey(
         $name, $this->_table, $columns, $refTable, $refColumns, $delete, $update
       );

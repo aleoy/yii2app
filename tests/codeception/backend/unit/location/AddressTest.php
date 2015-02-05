@@ -33,13 +33,6 @@ class AddressTest extends DbTestCase
             $this->assertFalse($model->validate(['districtId']));
         });
 
-        //neighborhoodId
-        $this->specify("neighborhood is required", function() {
-            $model = new Address;
-            $model->neighborhoodId = null;
-            $this->assertFalse($model->validate(['neighborhoodId']));
-        });
-
         //streetName
         $this->specify("streetName is required", function() {
             $model = new Address;
@@ -79,11 +72,11 @@ class AddressTest extends DbTestCase
             $attributes = [
                 'cityId' => $this->cities('riga')->id,
                 'districtId' => $this->districts('central')->id,
-                'neighborhoodId' => $this->neighborhoods('centrs')->id,
+                'neighborhoodId' => null,
                 'streetName' => 'brīvības iela',
                 'streetNumber' => '98',
                 'buildingNumber' => null,
-                'postCode' => 'LV-1011',
+                'postCode' => null,
                 'complement' => 'k2',
                 'latitude' => 56.9554,
                 'longitude' => 24.1201,
@@ -92,6 +85,8 @@ class AddressTest extends DbTestCase
             $model = new Address;
             $model->attributes = $attributes;
             $model->save();
+            if($model->hasErrors())
+                codecept_debug($model->getErrors());
 
             $searchAttributes = $attributes;
             unset($searchAttributes['latitude']);
