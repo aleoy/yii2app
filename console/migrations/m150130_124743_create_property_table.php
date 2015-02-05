@@ -27,7 +27,7 @@ class m150130_124743_create_property_table extends Migration
         'totalFloor' => Schema::TYPE_INTEGER . ' NULL',
         'hasLift' => Schema::TYPE_BOOLEAN . ' NOT NULL',
         'rooms' => Schema::TYPE_INTEGER . ' NOT NULL',
-        'parking' => Schema::TYPE_INTEGER . ' NOT NULL',
+        'parking' => Schema::TYPE_INTEGER . ' NULL',
         'price' => Schema::TYPE_MONEY . ' NULL',
         'otherDetails' => Schema::TYPE_TEXT . ' NULL',
         'createdBy' => Schema::TYPE_INTEGER . ' NULL',

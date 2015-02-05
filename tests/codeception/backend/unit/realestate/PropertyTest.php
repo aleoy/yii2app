@@ -185,7 +185,7 @@ class PropertyTest extends DbTestCase
             'totalFloor' => 6,
             'hasLift' => 1,
             'rooms' => $faker->randomDigitNotNull,
-            'parking' => $faker->randomDigitNotNull,
+            'parking' => null,
             'price' => $faker->randomFloat($nbMaxDecimals = 10, $min = 0, $max = NULL),
             'otherDetails' => $faker->text,
             'createdBy' => $this->users('admin')->id,

@@ -50,7 +50,7 @@ class Property extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['addressId', 'typeId', 'sourceId', 'createdAt', 'title', 'description', 'floorArea', 'rooms', 'parking'], 'required'],
+            [['addressId', 'typeId', 'sourceId', 'createdAt', 'title', 'description', 'floorArea', 'rooms'], 'required'],
             [['sourceUrl'], 'unique'],
             ['hasLift', 'boolean'],
             [['addressId', 'typeId', 'constructionTypeId', 'constructionStageId', 'sourceId', 'floorArea', 'onFloor', 'totalFloor', 'rooms', 'parking', 'createdBy', 'updatedBy'], 'integer'],
