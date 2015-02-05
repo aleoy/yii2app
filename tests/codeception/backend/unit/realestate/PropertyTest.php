@@ -65,6 +65,12 @@ class PropertyTest extends DbTestCase
             $this->assertFalse($model->validate(['description']));
         });
 
+        $this->specify("floorArea is required", function() {
+            $model = new Property;
+            $model->floorArea = null;
+            $this->assertFalse($model->validate(['floorArea']));
+        });
+
         $this->specify("object is saved", function(){
             $attributes = $this->getNewAttributes();
 
@@ -174,6 +180,10 @@ class PropertyTest extends DbTestCase
             'dateOffMarket' => $dateOffMarket,
             'title' => $faker->text(60),
             'description' => $faker->text,
+            'floorArea' => 100,
+            'onFloor' => 2,
+            'totalFloor' => 6,
+            'hasLift' => 1,
             'rooms' => $faker->randomDigitNotNull,
             'parking' => $faker->randomDigitNotNull,
             'price' => $faker->randomFloat($nbMaxDecimals = 10, $min = 0, $max = NULL),
