@@ -18,6 +18,9 @@ use Yii;
  * @property string $dateOffMarket
  * @property string $title
  * @property string $description
+ * @property integer $floorArea
+ * @property integer $floor
+ * @property boolean $hasLift
  * @property integer $rooms
  * @property integer $parking
  * @property string $price
@@ -47,9 +50,10 @@ class Property extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['addressId', 'typeId', 'sourceId', 'createdAt', 'title', 'description', 'rooms', 'parking'], 'required'],
+            [['addressId', 'typeId', 'sourceId', 'createdAt', 'title', 'description', 'floorArea', 'rooms', 'parking'], 'required'],
             [['sourceUrl'], 'unique'],
-            [['addressId', 'typeId', 'constructionTypeId', 'constructionStageId', 'sourceId', 'rooms', 'parking', 'createdBy', 'updatedBy'], 'integer'],
+            ['hasLift', 'boolean'],
+            [['addressId', 'typeId', 'constructionTypeId', 'constructionStageId', 'sourceId', 'floorArea', 'onFloor', 'totalFloor', 'rooms', 'parking', 'createdBy', 'updatedBy'], 'integer'],
             [['dateOnMarket', 'dateOffMarket', 'createdAt', 'updatedAt'], 'safe'],
             [['description', 'otherDetails'], 'string'],
             [['price'], 'number'],
@@ -74,6 +78,9 @@ class Property extends \yii\db\ActiveRecord
             'dateOffMarket' => Yii::t('app/realestate', 'Date Off Market'),
             'title' => Yii::t('app/realestate', 'Title'),
             'description' => Yii::t('app/realestate', 'Description'),
+            'floorArea' => Yii::t('app/realestate', 'Area'),
+            'floor' => Yii::t('app/realestate', 'Floor'),
+            'hasLift' => Yii::t('app/realestate', 'Has Lift?'),
             'rooms' => Yii::t('app/realestate', 'Rooms'),
             'parking' => Yii::t('app/realestate', 'Parking'),
             'price' => Yii::t('app/realestate', 'Price'),
