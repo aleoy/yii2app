@@ -11,7 +11,7 @@ class m150130_124743_create_property_table extends Migration
       $tableOptions = TableOptions::get($this);
       
       $this->createTable('{{%property}}', [
-        'id' => 'pk',
+        'id' => 'bigpk',
         'addressId' => Schema::TYPE_INTEGER . ' NOT NULL',
         'typeId' => Schema::TYPE_INTEGER . ' NOT NULL',
         'constructionTypeId' => Schema::TYPE_INTEGER . ' NULL',
