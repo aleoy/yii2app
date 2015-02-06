@@ -3,7 +3,7 @@
 namespace common\models\realestate;
 
 use Yii;
-
+use common\models\media\Image;
 /**
  * This is the model class for table "property".
  *
@@ -114,5 +114,14 @@ class Property extends \yii\db\ActiveRecord
     public function getType()
     {
         return $this->hasOne(PropertyType::className(), ['id' => 'typeId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(Image::className(), ['id' => 'imageId'])
+            ->viaTable('property_image', ['propertyId' => 'id']);
     }
 }

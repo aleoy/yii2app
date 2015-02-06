@@ -11,6 +11,7 @@ use common\models\realestate\ConstructionType;
 use common\models\realestate\ConstructionStage;
 use common\models\location\Address;
 use common\models\realestate\Property;
+use common\models\media\Image;
 
 use tests\codeception\common\fixtures\UserFixture;
 use tests\codeception\common\fixtures\realestate\PropertySourceFixture;
@@ -19,6 +20,7 @@ use tests\codeception\common\fixtures\realestate\ConstructionTypeFixture;
 use tests\codeception\common\fixtures\realestate\ConstructionStageFixture;
 use tests\codeception\common\fixtures\location\AddressFixture;
 use tests\codeception\common\fixtures\realestate\PropertyFixture;
+use tests\codeception\common\fixtures\media\ImageFixture;
 
 class PropertyTest extends DbTestCase
 {
@@ -83,6 +85,18 @@ class PropertyTest extends DbTestCase
             $this->assertSameModel($dbModel, $attributes);
         });
      }
+
+    public function testCreateImage()
+    {
+        $this->specify("link image to property", function() {
+            $property = $this->properties('apartment central');
+            $image = $this->images('img1');
+            $property->link('images', $image);
+            $property->refresh();
+            $this->assertEquals(1, count($property->images));
+            $this->assertEquals($property->images[0]->filename, $image->filename);
+        });
+    }
 
     public function testRead()
     {
@@ -160,6 +174,10 @@ class PropertyTest extends DbTestCase
             'properties' => [
                 'class' => PropertyFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/realestate/data/property.php'
+            ],
+            'images' => [
+                'class' => ImageFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/media/data/image.php'
             ],
         ];
     }
