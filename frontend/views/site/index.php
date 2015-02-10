@@ -14,7 +14,7 @@ $this->title = 'My Yii Application';
 
         <p>
             <?= Html::a(Yii::t('app', 'Get started'), 
-                        ['/realestate'], 
+                        ['/realestate/property'], 
                         ['class' => 'btn btn-success']) ?>
         </p>
     </div>

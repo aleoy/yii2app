@@ -55,17 +55,19 @@ class AddressTest extends DbTestCase
         });
 
         //latitude
-        $this->specify("latitude is required", function() {
+        $this->specify("latitude null, defaults to 0.00", function() {
             $model = new Address;
             $model->latitude = null;
-            $this->assertFalse($model->validate(['latitude']));
+            $this->assertTrue($model->validate(['latitude']));
+            $this->assertEquals($model->latitude, 0.00);
         });
 
         //longitude
-        $this->specify("longitude is required", function() {
+        $this->specify("longitude null, defaults to 0.00", function() {
             $model = new Address;
             $model->longitude = null;
-            $this->assertFalse($model->validate(['longitude']));
+            $this->assertTrue($model->validate(['longitude']));
+            $this->assertEquals($model->longitude, 0.00);
         });
 
         $this->specify("object is saved", function() {

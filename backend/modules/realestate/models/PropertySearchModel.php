@@ -14,8 +14,8 @@ class PropertySearchModel extends Property
 {
     public $city;
     public $district;
-    public $constructionType;
     public $type;
+    public $address;
 
     /**
      * @inheritdoc
@@ -24,7 +24,7 @@ class PropertySearchModel extends Property
     {
         return [
             [['id', 'onFloor', 'floorArea', 'addressId', 'typeId', 'constructionTypeId', 'constructionStageId', 'sourceId', 'title', 'rooms', 'parking', 'createdBy', 'updatedBy'], 'integer'],
-            [['type', 'constructionType', 'city', 'district', 'sourceUrl', 'dateOnMarket', 'dateOffMarket', 'description', 'otherDetails', 'createdAt', 'updatedAt'], 'safe'],
+            [['address', 'type', 'city', 'district', 'sourceUrl', 'dateOnMarket', 'dateOffMarket', 'description', 'otherDetails', 'createdAt', 'updatedAt'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -52,6 +52,7 @@ class PropertySearchModel extends Property
         $query->joinWith(['city', 'district']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['createdAt'=>SORT_DESC]]
         ]);
 
         // Important: here is how we set up the sorting
@@ -74,9 +75,9 @@ class PropertySearchModel extends Property
             'desc' => ['type.name' => SORT_DESC],
         ];
 
-        $dataProvider->sort->attributes['constructionType'] = [
-            'asc' => ['constructionType.name' => SORT_ASC],
-            'desc' => ['constructionType.name' => SORT_DESC],
+        $dataProvider->sort->attributes['address'] = [
+            'asc' => ['address.streetName' => SORT_ASC],
+            'desc' => ['address.streetName' => SORT_DESC],
         ];
 
         $this->load($params);
@@ -115,7 +116,7 @@ class PropertySearchModel extends Property
         ->andFilterWhere(['like', 'city.name', $this->city])
         ->andFilterWhere(['like', 'district.name', $this->district])
         ->andFilterWhere(['like', 'type.name', $this->type])
-        ->andFilterWhere(['like', 'constructionType.name', $this->constructionType]);
+        ->andFilterWhere(['like', 'address.streetName', $this->address]);
 
         return $dataProvider;
     }

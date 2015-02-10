@@ -39,8 +39,9 @@ class Address extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cityId', 'districtId', 'streetName', 'streetNumber', 'latitude', 'longitude'], 'required'],
+            [['cityId', 'districtId', 'streetName', 'streetNumber'], 'required'],
             [['cityId', 'districtId'], 'integer'],
+            [['latitude', 'longitude'], 'default', 'value' => 0.00],
             [['latitude', 'longitude'], 'number'],
             [['streetName', 'streetNumber', 'buildingNumber', 'postCode', 'complement'], 'string', 'max' => 255]
         ];

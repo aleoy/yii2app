@@ -7,6 +7,7 @@ use common\models\location\District;
 use common\models\location\City;
 use common\models\location\Address;
 use common\models\realestate\ConstructionType;
+use common\models\realestate\ConstructionStage;
 use common\models\media\Image;
 /**
  * This is the model class for table "property".
@@ -110,6 +111,14 @@ class Property extends \yii\db\ActiveRecord
     public function getConstructionType()
     {
         return $this->hasOne(ConstructionType::className(), ['id' => 'constructionTypeId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConstructionStage()
+    {
+        return $this->hasOne(ConstructionStage::className(), ['id' => 'constructionStageId']);
     }
 
     /**
