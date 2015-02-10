@@ -23,6 +23,7 @@ class Image extends \yii\db\ActiveRecord
     public $minSize;
     public $maxSize;
     public $basedir;
+    public $relativePath;
 
     public function init( )
     {
@@ -30,7 +31,8 @@ class Image extends \yii\db\ActiveRecord
         $this->allowedExtensions = ['jpg', 'png', 'gif'];
         $this->minSize = 20000; // bytes      - 20 kb
         $this->maxSize = 2147483647; // bytes - 2147.48 mb
-        $this->basedir = \Yii::getAlias('@frontend/web/media/img');
+        $this->relativePath = '/media/img';
+        $this->basedir = \Yii::getAlias('@frontend/web');
     }
 
     /**
@@ -49,7 +51,7 @@ class Image extends \yii\db\ActiveRecord
         return [
             [['path', 'filename', 'extension'], 'required'],
             [['size', 'height', 'width'], 'integer'],
-            ['size', 'compare', 'compareValue' => $this->minSize, 'operator' => '>='],
+            ['size', 'compare', 'compareValue' => $this->minSize, 'operator' => '>=', 'except' => 'scraper'],
             ['size', 'compare', 'compareValue' => $this->maxSize, 'operator' => '<='],
             [['path', 'filename', 'extension'], 'string', 'max' => 255]
         ];
@@ -82,7 +84,7 @@ class Image extends \yii\db\ActiveRecord
     public function download($uri, $basedir = null)
     {
         if(null === $basedir){
-            $basedir = $this->basedir;
+            $basedir = $this->basedir . $this->relativePath;
         }
         $dirname = $this->dirname;
         $basename = $this->getBasename($uri);
@@ -136,6 +138,8 @@ class Image extends \yii\db\ActiveRecord
 
         list($path, $basename, $extension, $filename) = array_values( pathinfo($file) );
         $this->path = $path;
+        //set for saving relative path
+        $this->setRelativePath();
         $this->extension = $extension;
         $this->filename = $filename;
         $this->size = filesize($file);
@@ -149,6 +153,16 @@ class Image extends \yii\db\ActiveRecord
         return $this->basedir . '/' . $this->path . '/' . $this->filename . '.' . $this->extension;
     }
 
+    public function geturi()
+    {
+        return $this->path . '/' . $this->filename . '.' . $this->extension;
+    }
+
+    public function setRelativePath()
+    {
+         $this->path = str_replace($this->basedir, '', $this->path);
+    }
+
     public function afterDelete()
     {
         if(is_file($this->file))
@@ -156,4 +170,16 @@ class Image extends \yii\db\ActiveRecord
 
         return parent::afterDelete();
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->setRelativePath();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

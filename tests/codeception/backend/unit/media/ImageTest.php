@@ -234,6 +234,16 @@ class ImageTest extends DbTestCase
         });
     }
 
+    public function testGetUri()
+    {
+        $this->specify("test get uri", function() {
+            $model = $this->images('img1');
+            $uri = '/media/img/2015/02/05/1/summer-house.jpg';
+
+            $this->assertEquals($model->uri, $uri);
+        });
+    }
+
     public function fixtures()
     {
         return [
