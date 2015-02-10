@@ -1,12 +1,66 @@
+<?php
+use yii\i18n\Formatter;
+use yii\helpers\Html;
+use yii\grid\GridView;
+?>
 <div class="realestate-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
+<?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            // 'id',
+            // [
+            //     'attribute' => 'city',
+            //     'value' => 'city.name',
+            // ],
+            [
+                'attribute' => 'image',
+                'format' => 'html',
+                'value' => function($data) {
+                    if(isset($data->images[0]))
+                        return Html::img($data->images[0]->uri, ['width'=>'100']);
+                    else
+                        return null;
+                },
+            ],
+            [
+                'attribute' => 'district',
+                'value' => 'district.name',
+            ],
+            [
+                'attribute' => 'type',
+                'value' => 'type.name',
+            ],
+            'floorArea',
+            [
+                'attribute' => 'constructionType',
+                'value' => 'constructionType.name',
+            ],
+            'onFloor',
+            // 'constructionStageId',
+            // 'sourceId',
+            // 'sourceUrl:url',
+            // 'dateOnMarket',
+            // 'dateOffMarket',
+            // 'title',
+            'rooms',
+            // 'parking',
+            [
+                'attribute' => 'price',
+                'format' => ['decimal'],
+                // 'value' => function ($data) {
+                //     return \yii\i18n\Formatter::asDecimal($data->price);
+                // },
+            ],
+            // 'otherDetails:ntext',
+            // 'createdBy',
+            // 'createdAt',
+            // 'updatedBy',
+            // 'updatedAt',
+
+            //['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 </div>

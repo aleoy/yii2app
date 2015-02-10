@@ -3,6 +3,10 @@
 namespace common\models\realestate;
 
 use Yii;
+use common\models\location\District;
+use common\models\location\City;
+use common\models\location\Address;
+use common\models\realestate\ConstructionType;
 use common\models\media\Image;
 /**
  * This is the model class for table "property".
@@ -103,9 +107,29 @@ class Property extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getConstructionType()
+    {
+        return $this->hasOne(ConstructionType::className(), ['id' => 'constructionTypeId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getAddress()
     {
         return $this->hasOne(Address::className(), ['id' => 'addressId']);
+    }
+
+    public function getCity()
+    {
+        return $this->hasOne(City::className(), ['id' => 'cityId'])
+            ->via('address');
+    }
+
+    public function getDistrict()
+    {
+        return $this->hasOne(District::className(), ['id' => 'districtId'])
+            ->via('address');
     }
 
     /**

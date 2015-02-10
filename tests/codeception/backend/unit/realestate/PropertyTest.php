@@ -19,6 +19,8 @@ use tests\codeception\common\fixtures\realestate\PropertyTypeFixture;
 use tests\codeception\common\fixtures\realestate\ConstructionTypeFixture;
 use tests\codeception\common\fixtures\realestate\ConstructionStageFixture;
 use tests\codeception\common\fixtures\location\AddressFixture;
+use tests\codeception\common\fixtures\location\CityFixture;
+use tests\codeception\common\fixtures\location\DistrictFixture;
 use tests\codeception\common\fixtures\realestate\PropertyFixture;
 use tests\codeception\common\fixtures\media\ImageFixture;
 
@@ -144,6 +146,30 @@ class PropertyTest extends DbTestCase
         });
     }
 
+    public function testCityRelation()
+    {
+        $this->specify("city relational data", function() {
+            $property = $this->properties('apartment central');
+            $city = $this->cities('riga');
+
+            $propertyCityName = $property->city->name;
+            $cityName = $city->name;
+            $this->assertEquals($propertyCityName, $cityName);
+        });
+    }
+
+    public function testDistrictRelation()
+    {
+        $this->specify("district relational data", function() {
+            $property = $this->properties('apartment central');
+            $district = $this->districts('central');
+
+            $propertyDistrictName = $property->district->name;
+            $districtName = $district->name;
+            $this->assertEquals($propertyDistrictName, $districtName);
+        });
+    }
+
     public function fixtures()
     {
         return [
@@ -154,6 +180,14 @@ class PropertyTest extends DbTestCase
             'addresses' => [
                 'class' => AddressFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/location/data/address.php'
+            ],
+            'cities' => [
+                'class' => CityFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/location/data/city.php'
+            ],
+            'districts' => [
+                'class' => DistrictFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/location/data/district.php'
             ],
             'propertySources' => [
                 'class' => PropertySourceFixture::className(),

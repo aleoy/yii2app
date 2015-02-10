@@ -12,7 +12,7 @@ $this->title = 'My Yii Application';
 
         <p class="lead">Real estate combinator.</p>
 
-        <p><a class="btn btn-lg btn-success" href="">Get started</a>
+        <p>
             <?= Html::a(Yii::t('app', 'Get started'), 
                         ['/realestate'], 
                         ['class' => 'btn btn-success']) ?>
