@@ -228,7 +228,7 @@ class ImageTest extends DbTestCase
     {
         $this->specify("test get file", function() {
             $model = $this->images('img1');
-            $file = $model->basedir.'/2015/02/05/1/summer-house.jpg';
+            $file = $model->basedir.'/media/img/2015/02/05/1/summer-house.jpg';
 
             $this->assertEquals($model->file, $file);
         });
@@ -238,7 +238,7 @@ class ImageTest extends DbTestCase
     {
         $this->specify("test get uri", function() {
             $model = $this->images('img1');
-            $uri = '/media/img/2015/02/05/1/summer-house.jpg';
+            $uri = 'media/img/2015/02/05/1/summer-house.jpg';
 
             $this->assertEquals($model->uri, $uri);
         });
