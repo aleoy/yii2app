@@ -41,6 +41,12 @@ use common\models\media\Image;
  */
 class Property extends \yii\db\ActiveRecord
 {
+    const TRANSACTION_SALE = 1;
+    const TRANSACTION_RENT = 2;
+    const TRANSACTION_VACATION_RENTAL = 3;
+    const TRANSACTION_AUCTION = 4;
+    const TRANSACTION_EXCHANGE = 5;
+
     /**
      * @inheritdoc
      */
@@ -55,7 +61,8 @@ class Property extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['addressId', 'typeId', 'sourceId', 'createdAt', 'title', 'description', 'floorArea', 'rooms'], 'required'],
+            [['transactionId', 'addressId', 'typeId', 'sourceId', 'createdAt', 'title', 'description', 'floorArea', 'rooms'], 'required'],
+            ['transactionId', 'in', 'range' => array_keys($this->transactions)],
             [['sourceUrl'], 'unique'],
             ['hasLift', 'boolean'],
             [['addressId', 'typeId', 'constructionTypeId', 'constructionStageId', 'sourceId', 'floorArea', 'onFloor', 'totalFloor', 'rooms', 'parking', 'createdBy', 'updatedBy'], 'integer'],
@@ -74,6 +81,7 @@ class Property extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app/realestate', 'ID'),
             'addressId' => Yii::t('app/realestate', 'Address ID'),
+            'transactionId' => Yii::t('app/realestate/property', 'Transaction'),
             'typeId' => Yii::t('app/realestate', 'Type ID'),
             'constructionTypeId' => Yii::t('app/realestate', 'Construction Type ID'),
             'constructionStageId' => Yii::t('app/realestate', 'Construction Stage ID'),
@@ -156,5 +164,16 @@ class Property extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Image::className(), ['id' => 'imageId'])
             ->viaTable('property_image', ['propertyId' => 'id']);
+    }
+
+    public function getTransactions()
+    {
+        return [
+            self::TRANSACTION_SALE => \Yii::t('app/realestate/property', 'sale'),
+            self::TRANSACTION_RENT => \Yii::t('app/realestate/property', 'rent'),
+            self::TRANSACTION_VACATION_RENTAL => \Yii::t('app/realestate/property', 'vacation rental'),
+            self::TRANSACTION_AUCTION => \Yii::t('app/realestate/property', 'auction'),
+            self::TRANSACTION_EXCHANGE => \Yii::t('app/realestate/property', 'exchange'),
+        ];
     }
 }

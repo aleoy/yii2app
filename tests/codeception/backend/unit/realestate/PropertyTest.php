@@ -45,6 +45,12 @@ class PropertyTest extends DbTestCase
             $this->assertFalse($model->validate(['addressId']));
         });
 
+        $this->specify("transactionId is required", function() {
+            $model = new Property;
+            $model->transactionId = null;
+            $this->assertFalse($model->validate(['transactionId']));
+        });
+
         $this->specify("type is required", function() {
             $model = new Property;
             $model->typeId = null;
@@ -170,6 +176,30 @@ class PropertyTest extends DbTestCase
         });
     }
 
+    public function testTransactionConstants()
+    {
+        $this->specify("transaction constants values", function() {
+            $this->assertEquals(Property::TRANSACTION_SALE, 1);
+            $this->assertEquals(Property::TRANSACTION_RENT, 2);
+            $this->assertEquals(Property::TRANSACTION_VACATION_RENTAL, 3);
+            $this->assertEquals(Property::TRANSACTION_AUCTION, 4);
+            $this->assertEquals(Property::TRANSACTION_EXCHANGE, 5);
+        });
+    }
+
+    public function testGetTransactions()
+    {
+        $model = new Property;
+        $transactions = [
+            Property::TRANSACTION_SALE => \Yii::t('app/realestate/property', 'sale'),
+            Property::TRANSACTION_RENT => \Yii::t('app/realestate/property', 'rent'),
+            Property::TRANSACTION_VACATION_RENTAL => \Yii::t('app/realestate/property', 'vacation rental'),
+            Property::TRANSACTION_AUCTION => \Yii::t('app/realestate/property', 'auction'),
+            Property::TRANSACTION_EXCHANGE => \Yii::t('app/realestate/property', 'exchange'),
+        ];
+        $this->assertEquals($transactions, $model->transactions);
+    }
+
     public function fixtures()
     {
         return [
@@ -222,6 +252,7 @@ class PropertyTest extends DbTestCase
         $dateOnMarket = $faker->dateTimeThisYear($max = 'now')->format('Y-m-d H:i:s');
         $dateOffMarket = $faker->dateTimeThisMonth($max = 'now')->format('Y-m-d H:i:s');
         $attributes = [
+            'transactionId' => Property::TRANSACTION_SALE,
             'addressId' => $this->addresses('central')->id,
             'typeId' => $this->propertyTypes('apartment')->id,
             'constructionTypeId' => $this->constructionTypes('brick')->id,

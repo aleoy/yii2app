@@ -1,9 +1,11 @@
 <?php
+use common\models\realestate\Property;
 
 $faker = \Faker\Factory::create();
 
 return [
   'apartment central' => [
+    'transactionId' => Property::TRANSACTION_SALE,
     'addressId' => 1, //central
     'typeId' => 1, //apartment
     'constructionTypeId' => 1, //brick
