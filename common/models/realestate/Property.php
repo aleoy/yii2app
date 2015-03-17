@@ -13,6 +13,7 @@ use common\models\media\Image;
  * This is the model class for table "property".
  *
  * @property integer $id
+ * @property integer $transationId
  * @property integer $addressId
  * @property integer $typeId
  * @property integer $constructionTypeId
@@ -166,7 +167,7 @@ class Property extends \yii\db\ActiveRecord
             ->viaTable('property_image', ['propertyId' => 'id']);
     }
 
-    public function getTransactions()
+    public static function getTransactions()
     {
         return [
             self::TRANSACTION_SALE => \Yii::t('app/realestate/property', 'sale'),
@@ -175,5 +176,19 @@ class Property extends \yii\db\ActiveRecord
             self::TRANSACTION_AUCTION => \Yii::t('app/realestate/property', 'auction'),
             self::TRANSACTION_EXCHANGE => \Yii::t('app/realestate/property', 'exchange'),
         ];
+    }
+
+    public function getMeterPrice()
+    {
+        return round($this->price / $this->floorArea, 0);
+    }
+
+    public function getFeaturedImage()
+    {
+        if (isset($this->images[0])) {
+            return $this->images[0]->uri;
+        } else {
+            return '';
+        }
     }
 }

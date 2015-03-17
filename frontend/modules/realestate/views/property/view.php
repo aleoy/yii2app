@@ -38,11 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'hasLift',
             [
                 'attribute' => 'constructionType',
-                'value' => $model->constructionType->name,
+                'value' => isset($model->constructionType) ? $model->constructionType->name : '',
             ],
             [
                 'attribute' => 'constructionStage',
-                'value' => isset($model->constructionStage) ?  $model->constructionStage->name : '',
+                'value' => isset($model->constructionStage) ? $model->constructionStage->name : '',
             ],
             [
                 'attribute' => 'price',

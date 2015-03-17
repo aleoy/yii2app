@@ -17,14 +17,18 @@ class PropertySearchModel extends Property
     public $type;
     public $address;
 
+    public $priceMin, $priceMax;
+    public $roomsMin, $roomsMax;
+    public $neighborhoodId, $districtId;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'onFloor', 'floorArea', 'addressId', 'typeId', 'constructionTypeId', 'constructionStageId', 'sourceId', 'title', 'rooms', 'parking', 'createdBy', 'updatedBy'], 'integer'],
-            [['address', 'type', 'city', 'district', 'sourceUrl', 'dateOnMarket', 'dateOffMarket', 'description', 'otherDetails', 'createdAt', 'updatedAt'], 'safe'],
+            [['id', 'transactionId', 'onFloor', 'floorArea', 'addressId', 'typeId', 'constructionTypeId', 'constructionStageId', 'sourceId', 'rooms', 'parking', 'createdBy', 'updatedBy', 'neighborhoodId', 'districtId'], 'integer'],
+            [['roomsMin', 'roomsMax', 'priceMin', 'priceMax', 'title', 'address', 'type', 'city', 'district', 'sourceUrl', 'dateOnMarket', 'dateOffMarket', 'description', 'otherDetails', 'createdAt', 'updatedAt'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -89,6 +93,7 @@ class PropertySearchModel extends Property
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'transactionId' => $this->transactionId,
             'addressId' => $this->addressId,
             'typeId' => $this->typeId,
             'constructionTypeId' => $this->constructionTypeId,
@@ -96,7 +101,6 @@ class PropertySearchModel extends Property
             'sourceId' => $this->sourceId,
             'dateOnMarket' => $this->dateOnMarket,
             'dateOffMarket' => $this->dateOffMarket,
-            'title' => $this->title,
             'rooms' => $this->rooms,
             'onFloor' => $this->onFloor,
             'floorArea' => $this->floorArea,
@@ -109,12 +113,19 @@ class PropertySearchModel extends Property
         ]);
 
         $query->andFilterWhere(['like', 'sourceUrl', $this->sourceUrl])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['>=', 'price', $this->priceMin])
+            ->andFilterWhere(['<=', 'price', $this->priceMax])
+            ->andFilterWhere(['>=', 'rooms', $this->roomsMin])
+            ->andFilterWhere(['<=', 'rooms', $this->roomsMax])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'otherDetails', $this->otherDetails])
         // Here we search the attributes of our relations using our previously configured
         // ones
         ->andFilterWhere(['like', 'city.name', $this->city])
         ->andFilterWhere(['like', 'district.name', $this->district])
+        ->andFilterWhere(['=', 'address.districtId', $this->districtId])
+        ->andFilterWhere(['=', 'address.neighborhoodId', $this->neighborhoodId])
         ->andFilterWhere(['like', 'type.name', $this->type])
         ->andFilterWhere(['like', 'address.streetName', $this->address]);
 
